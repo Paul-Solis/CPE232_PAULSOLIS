@@ -1,0 +1,24 @@
+---
+  - hosts: all
+    become: yes
+    tasks:
+
+    - name: Enduse apache (httpd) is installed 
+      yum:
+        name: httpd
+        state: present 
+      when: ansible_distribution == "RedHat"
+
+    - name: Ensure PHP and PHP modules are installed 
+      yum:
+        name:
+          - php
+        state: present
+      when: ansible_distribution == "RedHat"
+
+    - name: Start and enable apache service 
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "RedHat"
